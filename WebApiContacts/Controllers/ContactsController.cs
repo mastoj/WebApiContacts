@@ -31,13 +31,14 @@ namespace WebApiContacts.Controllers
         }
 
         // POST /api/Contacts
-        public void Post(Contact value)
+        public Contact Post(Contact value)
         {
             _contactRepository.Insert(value);
+            return value;
         }
 
         // PUT /api/Contacts/5
-        public void Put(int id, Contact value)
+        public Contact Put(int id, Contact value)
         {
             var contact = _contactRepository.Get().SingleOrDefault(y => y.Id == id);
             if (value != null)
@@ -45,7 +46,10 @@ namespace WebApiContacts.Controllers
                 contact.FirstName = value.FirstName;
                 contact.LastName = value.LastName;
                 contact.PhoneNumber = value.PhoneNumber;
+                contact.Image = value.Image;
+                contact.AddedDate = value.AddedDate;
             }
+            return value;
         }
 
         // DELETE /api/Contacts/5

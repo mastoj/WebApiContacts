@@ -7,11 +7,10 @@ namespace WebApiContacts.Controllers
 {
     public class ContactRepository
     {
-        private List<Contact> _contacts;
+        private static List<Contact> _contacts = new List<Contact>();
 
-        public ContactRepository()
+        static ContactRepository()
         {
-            _contacts = new List<Contact>();
             _contacts.Add(new Contact(0, "Alexander", "Rybak", "34343434", "alexander_rybak.jpg", DateTime.Now.AddDays(-1)));
             _contacts.Add(new Contact(1, "Bruce", "Lee", "343423434", "bruce_lee.jpg", DateTime.Now.AddDays(-3)));
             _contacts.Add(new Contact(2, "Darth", "Vader", "1234323", "dart_vader.jpg", DateTime.Now.AddDays(-2)));
