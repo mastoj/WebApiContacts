@@ -25,21 +25,24 @@ namespace WebApiContacts.Controllers
         }
 
         // GET /api/Contacts/5
-        public Contact Get(int id)
+        public HttpResponseMessage<Contact> Get(int id)
         {
             var contact = _contactRepository.Get().Where(y => y.Id == id).SingleOrDefault();
-            return contact;
+            var statusCode = contact != null ? HttpStatusCode.OK : HttpStatusCode.NotFound;
+            var response = new HttpResponseMessage<Contact>(contact, statusCode);
+            return response;
         }
 
         // POST /api/Contacts
-        public Contact Post(Contact value)
+        public HttpResponseMessage<Contact> Post(Contact value)
         {
             _contactRepository.Insert(value);
-            return value;
+            var response = new HttpResponseMessage<Contact>(value, HttpStatusCode.Created);
+            return response;
         }
 
         // PUT /api/Contacts/5
-        public Contact Put(int id, Contact value)
+        public HttpResponseMessage<Contact> Put(int id, Contact value)
         {
             var contact = _contactRepository.Get().SingleOrDefault(y => y.Id == id);
             if (value != null)
@@ -50,13 +53,16 @@ namespace WebApiContacts.Controllers
                 contact.Image = value.Image;
                 contact.AddedDate = value.AddedDate;
             }
-            return value;
+            var response = new HttpResponseMessage<Contact>(contact, HttpStatusCode.Accepted);
+            return response;
         }
 
         // DELETE /api/Contacts/5
-        public void Delete(int id)
+        public HttpResponseMessage Delete(int id)
         {
             _contactRepository.Delete(id);
+            var response = new HttpResponseMessage(HttpStatusCode.Accepted);
+            return response;
         }
     }
 }
