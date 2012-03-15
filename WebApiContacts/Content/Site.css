@@ -8,7 +8,7 @@ body {
     background-color: #fff;
     border-top: solid 10px #000;
     color: #333;
-    font-size: .85em;
+    font-size: 1.5em;
     font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
     margin: 0;
     padding: 0;
@@ -634,4 +634,29 @@ ul#social li {
             text-indent: 0;
             width: auto;
         }
+}
+
+.contact {
+    width: 520px;
+    border-radius: 5px;
+}
+#contacts .contact-content {
+    width: 300px;
+    display: inline-block;
+    vertical-align: top;
+}
+#contacts .contact-image {
+    width: 200px;
+    height: 200px;
+    display: inline-block;
+    margin: 5px 0px 0px 5px;
+}
+#contacts .contact-image img {
+    max-width: 200px;
+    max-height: 200px;
+}
+#contacts .contact-header {
+    background-color: cornflowerblue;
+    width: 100%;
+    border-radius: 5px 5px 0px 0px;
 }

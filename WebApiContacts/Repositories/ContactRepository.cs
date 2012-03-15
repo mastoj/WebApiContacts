@@ -11,11 +11,11 @@ namespace WebApiContacts.Controllers
 
         static ContactRepository()
         {
-            _contacts.Add(new Contact(0, "Alexander", "Rybak", "34343434", "alexander_rybak.jpg", DateTime.Now.AddDays(-1)));
-            _contacts.Add(new Contact(1, "Bruce", "Lee", "343423434", "bruce_lee.jpg", DateTime.Now.AddDays(-3)));
-            _contacts.Add(new Contact(2, "Darth", "Vader", "1234323", "dart_vader.jpg", DateTime.Now.AddDays(-2)));
-            _contacts.Add(new Contact(3, "Chuck", "Norris", "234234234", "chuck_norris.jpg", DateTime.Now.AddDays(-0)));
-            _contacts.Add(new Contact(4, "George", "Bush", "11111111", "george_bush.jpg", DateTime.Now.AddDays(-0)));
+            _contacts.Add(new Contact(0, "Alexander", "Rybak", "34343434", "/Images/contacts/alexander_rybak.jpg", DateTime.Now.AddDays(-1)));
+            _contacts.Add(new Contact(1, "Bruce", "Lee", "343423434", "/Images/contacts/bruce_lee.jpg", DateTime.Now.AddDays(-3)));
+            _contacts.Add(new Contact(2, "Darth", "Vader", "1234323", "/Images/contacts/darth_vader.jpg", DateTime.Now.AddDays(-2)));
+            _contacts.Add(new Contact(3, "Chuck", "Norris", "234234234", "/Images/contacts/chuck_norris.jpg", DateTime.Now.AddDays(-0)));
+            _contacts.Add(new Contact(4, "George", "Bush", "11111111", "/Images/contacts/george_bush.jpg", DateTime.Now.AddDays(-0)));
         }
 
         public IEnumerable<Contact> Get()
