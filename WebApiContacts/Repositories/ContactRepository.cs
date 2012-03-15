@@ -8,6 +8,7 @@ namespace WebApiContacts.Controllers
     public class ContactRepository
     {
         private static List<Contact> _contacts = new List<Contact>();
+        private static int nextId = 0;
 
         static ContactRepository()
         {
@@ -16,6 +17,7 @@ namespace WebApiContacts.Controllers
             _contacts.Add(new Contact(2, "Darth", "Vader", "1234323", "/Images/contacts/darth_vader.jpg", DateTime.Now.AddDays(-2)));
             _contacts.Add(new Contact(3, "Chuck", "Norris", "234234234", "/Images/contacts/chuck_norris.jpg", DateTime.Now.AddDays(-0)));
             _contacts.Add(new Contact(4, "George", "Bush", "11111111", "/Images/contacts/george_bush.jpg", DateTime.Now.AddDays(-0)));
+            nextId = 5;
         }
 
         public IEnumerable<Contact> Get()
@@ -25,7 +27,7 @@ namespace WebApiContacts.Controllers
 
         public void Insert(Contact contact)
         {
-            contact.Id = _contacts.Max(y => y.Id) + 1;
+            contact.Id = nextId++;
             contact.AddedDate = DateTime.Now;
             _contacts.Add(contact);
         }

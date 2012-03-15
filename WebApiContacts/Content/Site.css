@@ -636,7 +636,11 @@ ul#social li {
         }
 }
 
-.contact {
+#contacts {
+    display: inline-block;
+    width: 520px;    
+}
+#contacts .contact {
     width: 520px;
     border-radius: 5px;
 }
@@ -655,8 +659,18 @@ ul#social li {
     max-width: 200px;
     max-height: 200px;
 }
-#contacts .contact-header {
+
+.header {
     background-color: cornflowerblue;
     width: 100%;
-    border-radius: 5px 5px 0px 0px;
+    border-radius: 5px 5px 0px 0px;    
+}
+#add-contact {
+    display: inline-block;
+    vertical-align: top;
+    width: 370px;    
+}
+#add-contact label, #add-contact input  {
+    width: 175px;
+    display: inline-block;
 }

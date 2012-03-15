@@ -37,7 +37,7 @@ namespace WebApiContacts.Controllers
         public HttpResponseMessage<Contact> Post(Contact value)
         {
             _contactRepository.Insert(value);
-            var response = new HttpResponseMessage<Contact>(value, HttpStatusCode.Created);
+            var response = new HttpResponseMessage<Contact>(value, HttpStatusCode.OK);
             return response;
         }
 

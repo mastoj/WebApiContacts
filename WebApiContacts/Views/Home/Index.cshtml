@@ -55,14 +55,25 @@
             this.addContact = function (contact) {
                 self.contacts.push(contact);
             };
+            /* animations */
+            this.showContactElement = function (elem) {
+                if (elem.nodeType === 1) 
+                    $(elem).hide().slideDown();
+            };
+            this.deleteContactElement = function (elem) {
+                if (elem.nodeType === 1)
+                    $(elem).slideUp(function() {
+                         $(elem).remove();
+                    });
+            };
         }
 
         $(function () {
             var contactContainer = $("#contacts");
             var contactUrl = contactContainer.attr("data-contact-url");
+            var model = new ViewModel();
             $.getJSON(contactUrl, function (data, message, response) {
                 if (response.status == httpStuff.statusCodes.OK) {
-                    var model = new ViewModel();
                     for (var contactIndex in data) {
                         fixLink(data[contactIndex]);
                     }
@@ -73,11 +84,28 @@
             function fixLink(contact) {
                 contact.Uri = contactUrl + "/" + contact.Id;
             }
+            $('form').submit(function (evt) {
+                evt.preventDefault();
+                var data = $(this).serialize();
+                $.ajax({
+                    type: 'POST',
+                    url: contactUrl,
+                    data: data,
+                    success: function (contact) {
+                        fixLink(contact)
+                        model.addContact(contact);
+                    },
+                    error: function (data, response, bla) {
+                        alert(data);
+                    },
+                    dataType: "text json"
+                });
+            });
         });
     </script>
     <script type="text/html" id="contact-template">
         <div class="contact">
-            <div class="contact-header">
+            <div class="contact-header header">
                 <h3><span data-bind="text: FirstName"></span> <span data-bind="text: LastName"></span></h3>
             </div>
             <div class="contact-content">
@@ -114,9 +142,24 @@
         </section>
         <section class="content-wrapper main-content clear-fix">
             <h3>Contacts:</h3>
-            <div id="contacts" data-contact-url="@contactUrl" data-bind="template: { name: 'contact-template', foreach: contacts }">
+            <div id="contacts" data-contact-url="@contactUrl" data-bind="template: { name: 'contact-template', foreach: contacts, beforeRemove: deleteContactElement, afterAdd: showContactElement }">
             </div>
-        </section>
+            <div id="add-contact">
+                <div class="header"><h3>Add contact</h3></div>
+                <form method="POST" action="@contactUrl">
+                    <div class="input-field">
+                        @Html.Label("FirstName") @Html.TextBox("FirstName")
+                    </div>
+                    <div class="input-field">
+                        @Html.Label("LastName") @Html.TextBox("LastName")
+                    </div>
+                    <div class="input-field">
+                        @Html.Label("PhoneNumber") @Html.TextBox("PhoneNumber")
+                    </div>
+                    <input type="submit" value="Add contact"/>
+                </form>
+            </div>
+         </section>
     </div>
 </body>
 </html>
