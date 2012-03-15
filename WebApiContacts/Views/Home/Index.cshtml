@@ -39,7 +39,18 @@
                 }
             };
             this.deleteContact = function (contact) {
-                self.contacts.remove(contact);
+                var uri = contact.Uri;
+                $.ajax({
+                    url: uri,
+                    type: "DELETE",
+                    success: function () {
+                        self.contacts.remove(contact);
+                    },
+                    error: function (data, statusText, response) {
+                        alert(response.status + ": " + statusText);
+                    }
+                });
+
             };
             this.addContact = function (contact) {
                 self.contacts.push(contact);
