@@ -46,8 +46,8 @@
                     success: function () {
                         self.contacts.remove(contact);
                     },
-                    error: function (data, statusText, response) {
-                        alert(response.status + ": " + statusText);
+                    error: function (response, status, statusMessage) {
+                        alert(response.status + ": " + statusMessage);
                     }
                 });
 
