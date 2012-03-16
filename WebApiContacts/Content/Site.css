@@ -659,11 +659,17 @@ ul#social li {
     max-width: 200px;
     max-height: 200px;
 }
-
+.contact .contact-info {
+    background-color: #fff;
+    padding-left: 5px;
+    width: 100%;
+    border-radius: 0px 0px 5px 5px;        
+}
 .header {
     background-color: cornflowerblue;
-    width: 100%;
-    border-radius: 5px 5px 0px 0px;    
+    border-radius: 5px 5px 0px 0px;
+    padding-left: 5px;
+    margin-right: -5px;
 }
 #add-contact {
     display: inline-block;
@@ -673,4 +679,8 @@ ul#social li {
 #add-contact label, #add-contact input  {
     width: 175px;
     display: inline-block;
+}
+#add-contact form 
+{
+    padding-left: 5px;
 }

@@ -108,18 +108,20 @@
             <div class="contact-header header">
                 <h3><span data-bind="text: FirstName"></span> <span data-bind="text: LastName"></span></h3>
             </div>
-            <div class="contact-content">
-                <div class="contact-details">
-                    <div class="contact-detail">
-                        Phone number: <span data-bind="text: PhoneNumber"></span>
+            <div class="contact-info">
+                <div class="contact-content">
+                    <div class="contact-details">
+                        <div class="contact-detail">
+                            Phone number: <span data-bind="text: PhoneNumber"></span>
+                        </div>
+                    </div>
+                    <div class="contact-actions">
+                        <a href="#" data-bind="click: $root.deleteContact">Delete</a>
                     </div>
                 </div>
-                <div class="contact-actions">
-                    <a href="#" data-bind="click: $root.deleteContact">Delete</a>
+                <div class="contact-image">
+                    <img data-bind="attr: {src: Image}"/>
                 </div>
-            </div>
-            <div class="contact-image">
-                <img data-bind="attr: {src: Image}"/>
             </div>
         </div>
     </script>
