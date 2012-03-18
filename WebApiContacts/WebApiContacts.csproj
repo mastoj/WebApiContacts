@@ -162,6 +162,7 @@
     <Content Include="Images\contacts\chuck_norris.jpg" />
     <Content Include="Images\contacts\darth_vader.jpg" />
     <Content Include="Images\contacts\george_bush.jpg" />
+    <Content Include="Scripts\jquery.form.js" />
     <Content Include="Scripts\jquery-1.6.2-vsdoc.js" />
     <Content Include="Scripts\jquery-1.6.2.js" />
     <Content Include="Scripts\jquery-1.6.2.min.js" />

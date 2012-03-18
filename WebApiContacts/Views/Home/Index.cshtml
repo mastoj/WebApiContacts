@@ -9,6 +9,7 @@
     <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
     <script src="@Url.Content("~/Scripts/modernizr-2.0.6-development-only.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Scripts/jquery-1.6.2.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.form.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Scripts/knockout-2.0.0.js")" type="text/javascript"></script>
     <meta name="viewport" content="width=device-width" />
     
@@ -72,33 +73,24 @@
             var contactContainer = $("#contacts");
             var contactUrl = contactContainer.attr("data-contact-url");
             var model = new ViewModel();
+            ko.applyBindings(model);
             $.getJSON(contactUrl, function (data, message, response) {
                 if (response.status == httpStuff.statusCodes.OK) {
                     for (var contactIndex in data) {
                         fixLink(data[contactIndex]);
                     }
                     model.addContacts(data);
-                    ko.applyBindings(model);
                 }
             });
             function fixLink(contact) {
                 contact.Uri = contactUrl + "/" + contact.Id;
             }
-            $('form').submit(function (evt) {
-                evt.preventDefault();
-                var data = $(this).serialize();
-                $.ajax({
-                    type: 'POST',
-                    url: contactUrl,
-                    data: data,
-                    success: function (contact) {
-                        fixLink(contact)
-                        model.addContact(contact);
-                    },
-                    error: function (data, response, bla) {
-                        alert(data);
-                    },
-                    dataType: "text json"
+
+            $('form').ajaxForm(function (data, message, response) {
+                var location = response.getResponseHeader("Location");
+                $.getJSON(location, function (data, message2, response2) {
+                    fixLink(data);
+                    model.addContact(data);
                 });
             });
         });
@@ -148,15 +140,18 @@
             </div>
             <div id="add-contact">
                 <div class="header"><h3>Add contact</h3></div>
-                <form method="POST" action="@contactUrl">
+                <form method="POST" action="@contactUrl" enctype="multipart/form-data">
                     <div class="input-field">
                         @Html.Label("FirstName") @Html.TextBox("FirstName")
                     </div>
                     <div class="input-field">
                         @Html.Label("LastName") @Html.TextBox("LastName")
-                    </div>
+                    </div>Image
                     <div class="input-field">
                         @Html.Label("PhoneNumber") @Html.TextBox("PhoneNumber")
+                    </div>
+                    <div class="input-field">
+                        @Html.Label("File") @Html.TextBox("File", null, new { type = "file" })
                     </div>
                     <input type="submit" value="Add contact"/>
                 </form>
