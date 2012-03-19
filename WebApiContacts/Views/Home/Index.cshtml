@@ -1,5 +1,6 @@
 @{
-    var contactUrl = Url.RouteUrl("DefaultApi", new { httproute = "", controller = "Contacts"});
+    var contactUrl = Url.RouteUrl("DefaultApi", new { httproute = "", controller = "Contacts" });
+    var imageUrl = Url.RouteUrl("DefaultApi", new { httproute = "", controller = "Image" });
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -57,14 +58,19 @@
                 self.contacts.push(contact);
             };
             /* animations */
-            this.showContactElement = function (elem) {
-                if (elem.nodeType === 1) 
-                    $(elem).hide().slideDown();
+            this.showContactElement = function (elem, maybe, object) {
+                if (elem.nodeType === 1) {
+                    $(elem).hide().slideDown('normal', function() {
+                        $("form", this).ajaxForm(function(data, message, response, form) {
+                            object.HasImage(true);
+                        });
+                    });
+                }
             };
-            this.deleteContactElement = function (elem) {
+            this.deleteContactElement = function(elem) {
                 if (elem.nodeType === 1)
                     $(elem).slideUp(function() {
-                         $(elem).remove();
+                        $(elem).remove();
                     });
             };
         }
@@ -72,26 +78,28 @@
         $(function () {
             var contactContainer = $("#contacts");
             var contactUrl = contactContainer.attr("data-contact-url");
+            var imageUrl = contactContainer.attr("data-contact-image-url");
             var model = new ViewModel();
             ko.applyBindings(model);
             $.getJSON(contactUrl, function (data, message, response) {
                 if (response.status == httpStuff.statusCodes.OK) {
                     for (var contactIndex in data) {
-                        fixLink(data[contactIndex]);
+                        createKOContact(data[contactIndex]);
                     }
                     model.addContacts(data);
                 }
             });
-            function fixLink(contact) {
+            function createKOContact(contact) {
                 contact.Uri = contactUrl + "/" + contact.Id;
+                contact.Image = imageUrl + "/" + contact.Id;
+                var hasImage = contact.HasImage;
+                contact.HasImage = ko.observable(hasImage);
+                return contact;
             }
-
-            $('form').ajaxForm(function (data, message, response) {
-                var location = response.getResponseHeader("Location");
-                $.getJSON(location, function (data, message2, response2) {
-                    fixLink(data);
-                    model.addContact(data);
-                });
+            $("#addContact", this).ajaxForm(function (data, message, response, form) {
+                var contact = createKOContact(data);
+                model.addContact(contact);
+                $('input[type!="submit"]', form).val('');
             });
         });
     </script>
@@ -112,7 +120,15 @@
                     </div>
                 </div>
                 <div class="contact-image">
-                    <img data-bind="attr: {src: Image}"/>
+                    <div data-bind="if: HasImage">
+                        <img data-bind="attr: {src: Image}"/>
+                    </div>
+                    <div data-bind="ifnot: HasImage">
+                        <form enctype="multipart/form-data" method="POST" data-bind="attr: {action: Image}">
+                            <input type="file" name="file"/>
+                            <input type="submit" value="Upload image"/>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -136,22 +152,20 @@
         </section>
         <section class="content-wrapper main-content clear-fix">
             <h3>Contacts:</h3>
-            <div id="contacts" data-contact-url="@contactUrl" data-bind="template: { name: 'contact-template', foreach: contacts, beforeRemove: deleteContactElement, afterAdd: showContactElement }">
+            <div id="contacts" data-contact-url="@contactUrl" data-contact-image-url="@imageUrl" 
+                 data-bind="template: { name: 'contact-template', foreach: contacts, beforeRemove: deleteContactElement, afterAdd: showContactElement }">
             </div>
             <div id="add-contact">
                 <div class="header"><h3>Add contact</h3></div>
-                <form method="POST" action="@contactUrl" enctype="multipart/form-data">
+                <form method="POST" id="addContact" action="@contactUrl">
                     <div class="input-field">
                         @Html.Label("FirstName") @Html.TextBox("FirstName")
                     </div>
                     <div class="input-field">
                         @Html.Label("LastName") @Html.TextBox("LastName")
-                    </div>Image
-                    <div class="input-field">
-                        @Html.Label("PhoneNumber") @Html.TextBox("PhoneNumber")
                     </div>
                     <div class="input-field">
-                        @Html.Label("File") @Html.TextBox("File", null, new { type = "file" })
+                        @Html.Label("PhoneNumber") @Html.TextBox("PhoneNumber")
                     </div>
                     <input type="submit" value="Add contact"/>
                 </form>

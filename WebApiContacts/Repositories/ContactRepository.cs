@@ -7,16 +7,17 @@ namespace WebApiContacts.Controllers
 {
     public class ContactRepository
     {
+        private static Dictionary<int, string> _imageStore = new Dictionary<int, string>(); 
         private static List<Contact> _contacts = new List<Contact>();
         private static int nextId = 0;
 
         static ContactRepository()
         {
-            _contacts.Add(new Contact(0, "Alexander", "Rybak", "34343434", "/Images/contacts/alexander_rybak.jpg", DateTime.Now.AddDays(-1)));
-            _contacts.Add(new Contact(1, "Bruce", "Lee", "343423434", "/Images/contacts/bruce_lee.jpg", DateTime.Now.AddDays(-3)));
-            _contacts.Add(new Contact(2, "Darth", "Vader", "1234323", "/Images/contacts/darth_vader.jpg", DateTime.Now.AddDays(-2)));
-            _contacts.Add(new Contact(3, "Chuck", "Norris", "234234234", "/Images/contacts/chuck_norris.jpg", DateTime.Now.AddDays(-0)));
-            _contacts.Add(new Contact(4, "George", "Bush", "11111111", "/Images/contacts/george_bush.jpg", DateTime.Now.AddDays(-0)));
+            _contacts.Add(Contact.CreateContact(0, "Alexander", "Rybak", "34343434", true)); _imageStore.Add(0, "alexander_rybak.jpg");
+            _contacts.Add(Contact.CreateContact(1, "Bruce", "Lee", "2342", true)); _imageStore.Add(1, "bruce_lee.jpg");
+            _contacts.Add(Contact.CreateContact(2, "Darth", "Vader", "24235", true)); _imageStore.Add(2, "darth_vader.jpg");
+            _contacts.Add(Contact.CreateContact(3, "Chuck", "Norris", "235235", true)); _imageStore.Add(3, "chuck_norris.jpg");
+            _contacts.Add(Contact.CreateContact(4, "George", "Bush", "25235", true)); _imageStore.Add(4, "george_bush.jpg");
             nextId = 5;
         }
 
@@ -28,7 +29,6 @@ namespace WebApiContacts.Controllers
         public void Insert(Contact contact)
         {
             contact.Id = nextId++;
-            contact.AddedDate = DateTime.Now;
             _contacts.Add(contact);
         }
 
@@ -44,6 +44,18 @@ namespace WebApiContacts.Controllers
         private Contact Get(int id)
         {
             return _contacts.SingleOrDefault(y => y.Id == id);
+        }
+
+        public void InsertImage(int id, string fileName)
+        {
+            var contact = Get(id);
+            _imageStore[id] = fileName;
+            contact.HasImage = true;
+        }
+
+        public string GetImage(int id)
+        {
+            return _imageStore.SingleOrDefault(y => y.Key == id).Value;
         }
     }
 }

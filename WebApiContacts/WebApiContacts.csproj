@@ -119,6 +119,8 @@
     <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration.cs" />
+    <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Repositories\ContactRepository.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ContactsController.cs" />

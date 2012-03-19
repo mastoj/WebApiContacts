@@ -645,18 +645,18 @@ ul#social li {
     border-radius: 5px;
 }
 #contacts .contact-content {
-    width: 300px;
+    width: 270px;
     display: inline-block;
     vertical-align: top;
 }
 #contacts .contact-image {
-    width: 200px;
+    width: 230px;
     height: 200px;
     display: inline-block;
     margin: 5px 0px 0px 5px;
 }
 #contacts .contact-image img {
-    max-width: 200px;
+    max-width: 230px;
     max-height: 200px;
 }
 .contact .contact-info {
