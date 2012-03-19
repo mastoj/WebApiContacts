@@ -58,9 +58,12 @@
             /* animations */
             this.showContactElement = function (elem, maybe, object) {
                 if (elem.nodeType === 1) {
-                    $(elem).hide().slideDown('normal', function() {
-                        $("form", this).ajaxForm(function(data, message, response, form) {
-                            object.HasImage(true);
+                    $(elem).hide().slideDown('normal', function () {
+                        $("form", this).ajaxForm({
+                            iframe: true,
+                            success: function(data, message, response, form) {
+                                object.HasImage(true);
+                            }
                         });
                     });
                 }
