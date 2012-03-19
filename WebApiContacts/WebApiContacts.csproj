@@ -121,6 +121,7 @@
   <ItemGroup>
     <Compile Include="Configuration.cs" />
     <Compile Include="Controllers\ImageController.cs" />
+    <Compile Include="Filters\ValidationActionFilter.cs" />
     <Compile Include="Repositories\ContactRepository.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ContactsController.cs" />

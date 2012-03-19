@@ -100,6 +100,8 @@
                 var contact = createKOContact(data);
                 model.addContact(contact);
                 $('input[type!="submit"]', form).val('');
+            }, function (error) {
+                var x = error;
             });
         });
     </script>

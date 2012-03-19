@@ -6,6 +6,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using WebApiContacts.Filters;
 
 namespace WebApiContacts
 {
@@ -23,7 +24,10 @@ namespace WebApiContacts
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapHttpRoute(
+            var config = GlobalConfiguration.Configuration;
+            config.Filters.Add(new ValidationActionFilter());
+
+            config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
