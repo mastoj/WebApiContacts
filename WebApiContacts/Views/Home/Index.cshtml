@@ -96,12 +96,23 @@
                 contact.HasImage = ko.observable(hasImage);
                 return contact;
             }
-            $("#addContact", this).ajaxForm(function (data, message, response, form) {
-                var contact = createKOContact(data);
-                model.addContact(contact);
-                $('input[type!="submit"]', form).val('');
-            }, function (error) {
-                var x = error;
+
+            $("#addContact", this).ajaxForm({
+                dataType: "json",
+                success: function (data, message, response, form) {
+                    var contact = createKOContact(data);
+                    model.addContact(contact);
+                    $('input[type!="submit"]', form).val('');
+                },
+                error: function (errorResponse) {
+                    var errorMessage = "Validation error: ";
+                    var errors = jQuery.parseJSON(errorResponse.responseText);
+                    for (var errorIndex in errors) {
+                        var error = errors[errorIndex];
+                        errorMessage += "\n" + error.Message;
+                    }
+                    alert(errorMessage);
+                }
             });
         });
     </script>
