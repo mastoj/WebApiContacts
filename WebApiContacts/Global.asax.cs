@@ -1,6 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http.Formatting;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
@@ -26,6 +31,7 @@ namespace WebApiContacts
 
             var config = GlobalConfiguration.Configuration;
             config.Filters.Add(new ValidationActionFilter());
+            config.Formatters.Add(new JpgMediaFormatter());
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
@@ -49,5 +55,57 @@ namespace WebApiContacts
 
             BundleTable.Bundles.RegisterTemplateBundles();
         }
+    }
+
+    public class JpgMediaFormatter : BufferedMediaTypeFormatter
+    {
+        public JpgMediaFormatter()
+        {
+            SupportedMediaTypes.Add(new MediaTypeHeaderValue("image/jpg"));
+            SupportedMediaTypes.Add(new MediaTypeHeaderValue("image/png"));
+            MediaTypeMappings.Add(new QueryStringMapping("format", "jpg", "image/jpg"));
+        }
+
+        protected override bool CanWriteType(Type type)
+        {
+            if (typeof(string) == type)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        protected override void OnWriteToStream(Type type, object value, Stream stream, HttpContentHeaders contentHeaders, FormatterContext formatterContext, TransportContext transportContext)
+        {
+            var imageName = value as string;
+            if (!string.IsNullOrEmpty(imageName))
+            {
+                var path = HttpContext.Current.Server.MapPath(WACConfiguration.ImageFolderPath + imageName);
+                using (var file = new FileStream(path, FileMode.Open, FileAccess.Read))
+                {
+                    file.CopyTo(stream);
+                }
+                stream.Flush();
+            }
+        }
+
+        //protected override Task OnWriteToStreamAsync(Type type, object value, Stream stream, HttpContentHeaders contentHeaders, FormatterContext formatterContext, TransportContext transportContext)
+        //{
+        //    var task = Task.Factory.StartNew(() =>
+        //    {
+        //        var imageName = value as string;
+        //        if (!string.IsNullOrEmpty(imageName))
+        //        {
+        //            var path =  HttpContext.Current.Server.MapPath(WACConfiguration.ImageFolderPath + imageName);
+        //            using (var file = new FileStream(path, FileMode.Open, FileAccess.Read))
+        //            {
+        //                file.CopyTo(stream);
+        //            }
+        //            stream.Flush();
+        //        }
+        //    });
+
+        //    return task;
+        //}
     }
 }
