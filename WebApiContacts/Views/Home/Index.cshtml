@@ -34,9 +34,7 @@
             var self = this;
             self.contacts = ko.observableArray()
             self.addContacts = function (contacts) {
-                console.log(contacts);
                 for (var contactIndex in contacts) {
-                    console.log(contactIndex);
                     self.addContact(contacts[contactIndex]);
                 }
             };
