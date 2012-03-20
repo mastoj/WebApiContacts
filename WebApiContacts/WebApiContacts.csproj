@@ -124,6 +124,7 @@
     <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\SessionController.cs" />
     <Compile Include="Filters\ValidationActionFilter.cs" />
+    <Compile Include="Formatter\JpgMediaFormatter.cs" />
     <Compile Include="Repositories\ContactRepository.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ContactsController.cs" />
