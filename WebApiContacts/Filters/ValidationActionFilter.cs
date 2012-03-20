@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Http.Common;
 using System.Web.Http.Filters;
+using WebApiContacts.Logging;
 
 namespace WebApiContacts.Filters
 {
@@ -22,6 +23,10 @@ namespace WebApiContacts.Filters
                         Name = e.Key,
                         Message = e.Value.Errors.First().ErrorMessage
                     }).ToArray();
+                foreach (var error in errors)
+                {
+                    Log.Notification(error.Message);
+                }
                 actionContext.Response = new HttpResponseMessage<Error[]>(errors, HttpStatusCode.BadRequest);
             }
         }
