@@ -100,10 +100,10 @@
 
             $("#addContact", this).ajaxForm({
                 dataType: "json",
-                success: function (data, message, response, form) {
+                clearForm: true,
+                success: function (data) {
                     var contact = createKOContact(data);
                     model.addContact(contact);
-                    $('input[type!="submit"]', form).val('');
                 },
                 error: function (errorResponse) {
                     var errorMessage = "Validation error: ";
