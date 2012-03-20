@@ -3,23 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Security;
 
 namespace WebApiContacts.Controllers
 {
-    public class SessionController : Controller
+    public class Credentials
     {
-        public JsonResult Create(string userName, string password)
+        public string UserName { get; set; }
+        public string Password { get; set; }
+    }
+    public class SessionController : ApiController
+    {
+
+        public HttpResponseMessage<string> Post(Credentials credentials)
         {
-            if (userName == password && !string.IsNullOrEmpty(userName))
+            if (credentials.UserName == credentials.Password && !string.IsNullOrEmpty(credentials.UserName))
             {
-                FormsAuthentication.SetAuthCookie(userName, true);
-                return new JsonResult() {Data = "LoggedIn"};
+                var authCookie = FormsAuthentication.GetAuthCookie(credentials.UserName, true);
+                HttpContext.Current.Response.Cookies.Add(authCookie);
+                return new HttpResponseMessage<string>("Logged in", HttpStatusCode.Created);
             }
-            Response.StatusCode = (int)HttpStatusCode.BadRequest;
-            return new JsonResult() {Data = "Invalid credentials"};
+            return new HttpResponseMessage<string>("Invalid credentials", HttpStatusCode.BadRequest);
         }
     }
 }
