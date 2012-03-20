@@ -1,6 +1,7 @@
 @{
     var contactUrl = Url.RouteUrl("DefaultApi", new { httproute = "", controller = "Contacts" });
     var imageUrl = Url.RouteUrl("DefaultApi", new { httproute = "", controller = "Image" });
+    var loginUrl = Url.RouteUrl("Default", new { controller="Session", action="Create"});
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -12,111 +13,9 @@
     <script src="@Url.Content("~/Scripts/jquery-1.6.2.min.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Scripts/jquery.form.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Scripts/knockout-2.0.0.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/webapicontacts.js")" type="text/javascript"></script>
     <meta name="viewport" content="width=device-width" />
     
-    <script type="text/javascript">
-        var httpStuff = {
-            statusCodes :
-                {
-                    OK: 200,
-                    Created: 201,
-                    Accepted: 202,
-                    NoContent: 204,
-                    BadRequest: 400,
-                    Unauthorized: 401,
-                    Forbidden: 403,
-                    NotFound: 404,
-                    NotAllowed: 405,
-                    ServerError: 500
-                }
-        }
-        function ViewModel() {
-            var self = this;
-            self.contacts = ko.observableArray()
-            self.addContacts = function (contacts) {
-                for (var contactIndex in contacts) {
-                    self.addContact(contacts[contactIndex]);
-                }
-            };
-            this.deleteContact = function (contact) {
-                var uri = contact.Uri;
-                $.ajax({
-                    url: uri,
-                    type: "DELETE",
-                    success: function () {
-                        self.contacts.remove(contact);
-                    },
-                    error: function (response, status, statusMessage) {
-                        alert(response.status + ": " + statusMessage);
-                    }
-                });
-
-            };
-            this.addContact = function (contact) {
-                self.contacts.push(contact);
-            };
-            /* animations */
-            this.showContactElement = function (elem, maybe, object) {
-                if (elem.nodeType === 1) {
-                    $(elem).hide().slideDown('normal', function () {
-                        $("form", this).ajaxForm({
-                            iframe: true,
-                            success: function(data, message, response, form) {
-                                object.HasImage(true);
-                            }
-                        });
-                    });
-                }
-            };
-            this.deleteContactElement = function(elem) {
-                if (elem.nodeType === 1)
-                    $(elem).slideUp(function() {
-                        $(elem).remove();
-                    });
-            };
-        }
-
-        $(function () {
-            var contactContainer = $("#contacts");
-            var contactUrl = contactContainer.attr("data-contact-url");
-            var imageUrl = contactContainer.attr("data-contact-image-url");
-            var model = new ViewModel();
-            ko.applyBindings(model);
-            $.getJSON(contactUrl, function (data, message, response) {
-                if (response.status == httpStuff.statusCodes.OK) {
-                    for (var contactIndex in data) {
-                        createKOContact(data[contactIndex]);
-                    }
-                    model.addContacts(data);
-                }
-            });
-            function createKOContact(contact) {
-                contact.Uri = contactUrl + "/" + contact.Id;
-                contact.Image = imageUrl + "/" + contact.Id;
-                var hasImage = contact.HasImage;
-                contact.HasImage = ko.observable(hasImage);
-                return contact;
-            }
-
-            $("#addContact", this).ajaxForm({
-                dataType: "json",
-                clearForm: true,
-                success: function (data) {
-                    var contact = createKOContact(data);
-                    model.addContact(contact);
-                },
-                error: function (errorResponse) {
-                    var errorMessage = "Validation error: ";
-                    var errors = jQuery.parseJSON(errorResponse.responseText);
-                    for (var errorIndex in errors) {
-                        var error = errors[errorIndex];
-                        errorMessage += "\n" + error.Message;
-                    }
-                    alert(errorMessage);
-                }
-            });
-        });
-    </script>
     <script type="text/html" id="contact-template">
         <div class="contact">
             <div class="contact-header header">
@@ -170,19 +69,35 @@
                  data-bind="template: { name: 'contact-template', foreach: contacts, beforeRemove: deleteContactElement, afterAdd: showContactElement }">
             </div>
             <div id="add-contact">
-                <div class="header"><h3>Add contact</h3></div>
-                <form method="POST" id="addContact" action="@contactUrl">
-                    <div class="input-field">
-                        @Html.Label("FirstName") @Html.TextBox("FirstName")
+                <div>
+                    <div class="header"><h3>Add contact</h3></div>
+                    <form method="POST" id="addContact" action="@contactUrl">
+                        <div class="input-field">
+                            @Html.Label("FirstName") @Html.TextBox("FirstName")
+                        </div>
+                        <div class="input-field">
+                            @Html.Label("LastName") @Html.TextBox("LastName")
+                        </div>
+                        <div class="input-field">
+                            @Html.Label("PhoneNumber") @Html.TextBox("PhoneNumber")
+                        </div>
+                        <input type="submit" value="Add contact"/>
+                    </form>
+                </div>
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    <div id="login-container">
+                        <form id="login" method="POST" action="@loginUrl">
+                            <div class="input-field">
+                                @Html.Label("UserName") @Html.TextBox("UserName")
+                            </div>
+                            <div class="input-field">
+                                @Html.Label("Password") @Html.Password("Password")
+                            </div>
+                            <input type="submit" value="Add contact"/>
+                        </form>
                     </div>
-                    <div class="input-field">
-                        @Html.Label("LastName") @Html.TextBox("LastName")
-                    </div>
-                    <div class="input-field">
-                        @Html.Label("PhoneNumber") @Html.TextBox("PhoneNumber")
-                    </div>
-                    <input type="submit" value="Add contact"/>
-                </form>
+                }
             </div>
          </section>
     </div>

@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
+using WebApiContacts.Attributes;
 using WebApiContacts.Models;
 
 namespace WebApiContacts.Controllers
@@ -36,6 +37,7 @@ namespace WebApiContacts.Controllers
         }
 
         // POST /api/Contacts
+        [WAAuthorize]
         public HttpResponseMessage<Contact> Post(Contact contact)
         {
             _contactRepository.Insert(contact);

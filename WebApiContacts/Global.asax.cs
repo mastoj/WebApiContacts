@@ -88,24 +88,5 @@ namespace WebApiContacts
                 stream.Flush();
             }
         }
-
-        //protected override Task OnWriteToStreamAsync(Type type, object value, Stream stream, HttpContentHeaders contentHeaders, FormatterContext formatterContext, TransportContext transportContext)
-        //{
-        //    var task = Task.Factory.StartNew(() =>
-        //    {
-        //        var imageName = value as string;
-        //        if (!string.IsNullOrEmpty(imageName))
-        //        {
-        //            var path =  HttpContext.Current.Server.MapPath(WACConfiguration.ImageFolderPath + imageName);
-        //            using (var file = new FileStream(path, FileMode.Open, FileAccess.Read))
-        //            {
-        //                file.CopyTo(stream);
-        //            }
-        //            stream.Flush();
-        //        }
-        //    });
-
-        //    return task;
-        //}
     }
 }

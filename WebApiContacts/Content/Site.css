@@ -130,39 +130,6 @@ footer {
 }
 
 
-/* login
-----------------------------------------------------------*/
-#login {
-    display: block;
-    font-size: .85em;
-    margin: 20px 0 12px;
-    text-align: right;
-}
-
-    #login a {
-        background-color: #d3dce0;
-        margin-left: 10px;
-        margin-right: 3px;
-        padding: 2px 3px;
-        text-decoration: none;
-    }
-
-    #login a.username {
-        background: none;
-        margin-left: 0px;
-        text-decoration: underline;
-    }
-
-    #login ul {
-        margin: 0;
-    }
-
-    #login li {
-        display: inline;
-        list-style: none;
-    }
-
-
 /* menu
 ----------------------------------------------------------*/
 ul#menu {
