@@ -13,14 +13,14 @@ namespace WebApiContacts.IoC
 
         static MyResolver()
         {
-            container.Add(typeof(ContactRepository), () => repository);
-            container.Add(typeof(ContactsController), () => new ContactsController(GetInstance<ContactRepository>()));
-            container.Add(typeof(ImageController), () => new ImageController(GetInstance<ContactRepository>()));
+            container.Add(typeof (ContactRepository), () => repository);
+            container.Add(typeof (ContactsController), () => new ContactsController(GetInstance<ContactRepository>()));
+            container.Add(typeof (ImageController), () => new ImageController(GetInstance<ContactRepository>()));
         }
 
-        static T GetInstance<T>() where T : class
+        private static T GetInstance<T>() where T : class
         {
-            return container[typeof(T)]() as T;
+            return container[typeof (T)]() as T;
         }
 
         public object GetService(Type serviceType)

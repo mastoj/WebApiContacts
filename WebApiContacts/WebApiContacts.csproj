@@ -129,6 +129,7 @@
     <Compile Include="Filters\ValidationActionFilter.cs" />
     <Compile Include="Formatters\JpgMediaFormatter.cs" />
     <Compile Include="Formatters\VCardFormatter.cs" />
+    <Compile Include="IoC\MyResolver.cs" />
     <Compile Include="Logging\Log.cs" />
     <Compile Include="Models\Contact.cs" />
     <Compile Include="Repositories\ContactRepository.cs" />

@@ -4,6 +4,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using WebApiContacts.Filters;
 using WebApiContacts.Formatter;
+using WebApiContacts.IoC;
 
 namespace WebApiContacts
 {
@@ -46,6 +47,7 @@ namespace WebApiContacts
             config.Filters.Add(new ValidationActionFilter());
             config.Formatters.Add(new VCardFormatter());
             config.Formatters.Add(new JpgMediaFormatter());
+            config.ServiceResolver.SetResolver(new MyResolver());
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
