@@ -122,9 +122,11 @@
     <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attribute\WAAuthorizeAttribute.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="Controllers\ContactsController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
+    <Compile Include="Controllers\SessionController.cs" />
     <Compile Include="Extensions\HttpContentExtensions.cs" />
     <Compile Include="Filters\ValidationActionFilter.cs" />
     <Compile Include="Formatters\JpgMediaFormatter.cs" />
