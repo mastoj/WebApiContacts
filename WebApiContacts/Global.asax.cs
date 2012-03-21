@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using WebApiContacts.Filters;
 
 namespace WebApiContacts
 {
@@ -41,6 +42,8 @@ namespace WebApiContacts
 
         private void ConfigureApis(HttpConfiguration config)
         {
+            config.Filters.Add(new ValidationActionFilter());
+
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",

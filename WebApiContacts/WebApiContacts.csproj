@@ -125,6 +125,7 @@
     <Compile Include="Configuration.cs" />
     <Compile Include="Controllers\ContactsController.cs" />
     <Compile Include="Extensions\HttpContentExtensions.cs" />
+    <Compile Include="Filters\ValidationActionFilter.cs" />
     <Compile Include="Logging\Log.cs" />
     <Compile Include="Models\Contact.cs" />
     <Compile Include="Repositories\ContactRepository.cs" />
