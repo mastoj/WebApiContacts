@@ -27,6 +27,7 @@ namespace WebApiContacts.Filters
                 {
                     Log.Notification(error.Message);
                 }
+                HttpContext.Current.Response.TrySkipIisCustomErrors = true;
                 actionContext.Response = new HttpResponseMessage<Error[]>(errors, HttpStatusCode.BadRequest);
             }
         }
