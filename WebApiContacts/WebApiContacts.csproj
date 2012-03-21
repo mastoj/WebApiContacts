@@ -123,8 +123,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration.cs" />
+    <Compile Include="Controllers\ContactsController.cs" />
     <Compile Include="Extensions\HttpContentExtensions.cs" />
     <Compile Include="Logging\Log.cs" />
+    <Compile Include="Models\Contact.cs" />
     <Compile Include="Repositories\ContactRepository.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -214,7 +216,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
