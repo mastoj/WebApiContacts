@@ -124,6 +124,7 @@
   <ItemGroup>
     <Compile Include="Attributes\WAAuthorize.cs" />
     <Compile Include="Configuration.cs" />
+    <Compile Include="Extensions\HttpContentExtensions.cs" />
     <Compile Include="Logging\Log.cs" />
     <Compile Include="Repositories\ContactRepository.cs" />
     <Compile Include="Controllers\HomeController.cs" />
