@@ -15,9 +15,9 @@ namespace WebApiContacts.Controllers
     {
         private ContactRepository _contactRepository;
 
-        public ContactsController(ContactRepository contactRepository)
+        public ContactsController()
         {
-            _contactRepository = contactRepository;
+            _contactRepository = new ContactRepository();
         }
 
 
