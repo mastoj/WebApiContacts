@@ -14,7 +14,6 @@ namespace WebApiContacts.Formatter
         public JpgMediaFormatter()
         {
             SupportedMediaTypes.Add(new MediaTypeHeaderValue("image/jpg"));
-            SupportedMediaTypes.Add(new MediaTypeHeaderValue("image/png"));
             MediaTypeMappings.Add(new QueryStringMapping("format", "jpg", "image/jpg"));
         }
 

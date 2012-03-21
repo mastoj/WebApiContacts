@@ -75,7 +75,7 @@ $(function () {
     });
     function createKOContact(contact) {
         contact.Uri = contactUrl + "/" + contact.Id;
-        contact.Image = imageUrl + "/" + contact.Id;
+        contact.Image = imageUrl + "/" + contact.Id + "?format=jpg";
         var hasImage = contact.HasImage;
         contact.HasImage = ko.observable(hasImage);
         return contact;
