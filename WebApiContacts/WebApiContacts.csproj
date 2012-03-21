@@ -36,6 +36,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DataAnnotationsExtensions">
+      <HintPath>..\packages\DataAnnotationsExtensions.1.0.2.0\lib\NETFramework40\DataAnnotationsExtensions.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.4.1.10331.0\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
@@ -125,6 +128,7 @@
     <Compile Include="Controllers\SessionController.cs" />
     <Compile Include="Filters\ValidationActionFilter.cs" />
     <Compile Include="Formatter\JpgMediaFormatter.cs" />
+    <Compile Include="Formatter\VCardFormatter.cs" />
     <Compile Include="IoC\MyResolver.cs" />
     <Compile Include="Logging\Log.cs" />
     <Compile Include="Repositories\ContactRepository.cs" />

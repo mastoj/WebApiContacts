@@ -74,7 +74,8 @@ $(function () {
         }
     });
     function createKOContact(contact) {
-        contact.Uri = contactUrl + "/" + contact.Id;
+        contact.Url = contactUrl + "/" + contact.Id;
+        contact.VCardUrl = contactUrl + "/" + contact.Id + "?format=vcard";
         contact.Image = imageUrl + "/" + contact.Id + "?format=jpg";
         var hasImage = contact.HasImage;
         contact.HasImage = ko.observable(hasImage);

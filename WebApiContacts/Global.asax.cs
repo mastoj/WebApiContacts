@@ -46,6 +46,7 @@ namespace WebApiContacts
         {
             config.Filters.Add(new ValidationActionFilter());
             config.Formatters.Add(new JpgMediaFormatter());
+            config.Formatters.Add(new VCardFormatter());
             config.ServiceResolver.SetResolver(new MyResolver());
 
             config.Routes.MapHttpRoute(

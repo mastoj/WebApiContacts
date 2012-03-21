@@ -27,9 +27,16 @@
                         <div class="contact-detail">
                             Phone number: <span data-bind="text: PhoneNumber"></span>
                         </div>
+                        <div class="contact-detail">
+                            Address: <span data-bind="text: Address"></span>, <span data-bind="text: City"></span>, <span data-bind="text: Zip"></span>
+                        </div>
+                        <div class="contact-detail">
+                            Email: <span data-bind="text: Email"></span>
+                        </div>
                     </div>
                     <div class="contact-actions">
                         <a href="#" data-bind="click: $root.deleteContact">Delete</a>
+                        <a data-bind="attr: {href: VCardUrl}">vCard</a>
                     </div>
                 </div>
                 <div class="contact-image">
@@ -80,6 +87,18 @@
                         </div>
                         <div class="input-field">
                             @Html.Label("PhoneNumber") @Html.TextBox("PhoneNumber")
+                        </div>
+                        <div class="input-field">
+                            @Html.Label("Address") @Html.TextBox("Address")
+                        </div>
+                        <div class="input-field">
+                            @Html.Label("City") @Html.TextBox("City")
+                        </div>
+                        <div class="input-field">
+                            @Html.Label("Zip") @Html.TextBox("Zip")
+                        </div>
+                        <div class="input-field">
+                            @Html.Label("Email") @Html.TextBox("Email")
                         </div>
                         <input type="submit" value="Add contact"/>
                     </form>
