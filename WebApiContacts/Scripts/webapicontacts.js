@@ -62,7 +62,6 @@ function ViewModel() {
 $(function () {
     var contactContainer = $("#contacts");
     var contactUrl = contactContainer.attr("data-contact-url");
-    var imageUrl = contactContainer.attr("data-contact-image-url");
     var model = new ViewModel();
     ko.applyBindings(model);
     $.getJSON(contactUrl, function (data, message, response) {
@@ -76,7 +75,7 @@ $(function () {
     function createKOContact(contact) {
         contact.Url = contactUrl + "/" + contact.Id;
         contact.VCardUrl = contactUrl + "/" + contact.Id + "?format=vcard";
-        contact.Image = imageUrl + "/" + contact.Id + "?format=jpg";
+        contact.Image = contactUrl + "/" + contact.Id + "?format=jpg";
         var hasImage = contact.HasImage;
         contact.HasImage = ko.observable(hasImage);
         return contact;
