@@ -13,9 +13,9 @@ namespace WebApiContacts.Controllers
     {
         private ContactRepository _contactRepository;
 
-        public ImageController(ContactRepository contactRepository)
+        public ImageController()
         {
-            _contactRepository = contactRepository;
+            _contactRepository = new ContactRepository();
         }
 
         public HttpResponseMessage<string> Post([FromUri]int id)
