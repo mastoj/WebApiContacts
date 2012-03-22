@@ -13,22 +13,12 @@ namespace WebApiContacts.Controllers
     {
         private ContactRepository _contactRepository;
 
-        public ImageController()
+        public ImageController(ContactRepository contactRepository)
         {
-            _contactRepository = new ContactRepository();
+            _contactRepository = contactRepository;
         }
 
-        public HttpResponseMessage<string> Get(int id)
-        {
-            var image = _contactRepository.GetImage(id);
-            if (image == null)
-            {
-                return new HttpResponseMessage<string>("", HttpStatusCode.NotFound);
-            }
-            return new HttpResponseMessage<string>(image);
-        }
-
-        public HttpResponseMessage<string> Post([FromUri] int id)
+        public HttpResponseMessage<string> Post([FromUri]int id)
         {
             if (!Request.Content.IsMimeMultipartContent("form-data"))
             {
@@ -43,7 +33,7 @@ namespace WebApiContacts.Controllers
             fileName = fileName.Remove(fileName.Length - 1, 1).Remove(0, 1);
             _contactRepository.InsertImage(id, fileName);
             var response = new HttpResponseMessage<string>(fileName, HttpStatusCode.Created);
-            var location = Url.Route("DefaultApi", new {httproute = "", controller = "Image", id});
+            var location = Url.Route("DefaultApi", new { httproute = "", controller = "Image", id });
             response.Headers.Location = new Uri(location, UriKind.Relative);
             return response;
         }
