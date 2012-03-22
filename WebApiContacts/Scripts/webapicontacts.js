@@ -76,7 +76,8 @@ $(function () {
     function createKOContact(contact) {
         contact.Url = contactUrl + "/" + contact.Id;
         contact.VCardUrl = contactUrl + "/" + contact.Id + "?format=vcard";
-        contact.Image = imageUrl + "/" + contact.Id + "?format=jpg";
+        contact.ImageGet = contactUrl + "/" + contact.Id + "?format=jpg";
+        contact.ImagePost = imageUrl + "/" + contact.Id;
         var hasImage = contact.HasImage;
         contact.HasImage = ko.observable(hasImage);
         return contact;

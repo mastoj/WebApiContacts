@@ -41,10 +41,10 @@
                 </div>
                 <div class="contact-image">
                     <div data-bind="if: HasImage">
-                        <img data-bind="attr: {src: Image}"/>
+                        <img data-bind="attr: {src: ImageGet}"/>
                     </div>
                     <div data-bind="ifnot: HasImage">
-                        <form enctype="multipart/form-data" method="POST" data-bind="attr: {action: Image}">
+                        <form enctype="multipart/form-data" method="POST" data-bind="attr: {action: ImagePost}">
                             <input type="file" name="file"/>
                             <input type="submit" value="Upload image"/>
                         </form>
