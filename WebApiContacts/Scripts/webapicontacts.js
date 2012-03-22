@@ -22,9 +22,9 @@ function ViewModel() {
         }
     };
     this.deleteContact = function (contact) {
-        var uri = contact.Uri;
+        var url = contact.Url;
         $.ajax({
-            url: uri,
+            url: url,
             type: "DELETE",
             success: function () {
                 self.contacts.remove(contact);
