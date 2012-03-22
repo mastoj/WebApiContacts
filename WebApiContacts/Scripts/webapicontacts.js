@@ -15,7 +15,7 @@
 }
 function ViewModel() {
     var self = this;
-    self.contacts = ko.observableArray()
+    self.contacts = ko.observableArray();
     self.addContacts = function (contacts) {
         for (var contactIndex in contacts) {
             self.addContact(contacts[contactIndex]);
