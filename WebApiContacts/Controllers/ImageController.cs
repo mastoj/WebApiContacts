@@ -18,16 +18,6 @@ namespace WebApiContacts.Controllers
             _contactRepository = contactRepository;
         }
 
-        public HttpResponseMessage<string> Get(int id)
-        {
-            var image = _contactRepository.GetImage(id);
-            if (image == null)
-            {
-                return new HttpResponseMessage<string>("", HttpStatusCode.NotFound);
-            }
-            return new HttpResponseMessage<string>(image);
-        }
-
         public HttpResponseMessage<string> Post([FromUri]int id)
         {
             if (!Request.Content.IsMimeMultipartContent("form-data"))

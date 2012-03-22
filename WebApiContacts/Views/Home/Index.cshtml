@@ -1,6 +1,5 @@
 @{
     var contactUrl = Url.RouteUrl("DefaultApi", new { httproute = "", controller = "Contacts" });
-    var imageUrl = Url.RouteUrl("DefaultApi", new { httproute = "", controller = "Image" });
     var loginUrl = Url.RouteUrl("DefaultApi", new { httproute = "", controller = "Session" });
 }
 <!DOCTYPE html>
@@ -72,7 +71,7 @@
         </section>
         <section class="content-wrapper main-content clear-fix">
             <h3>Contacts:</h3>
-            <div id="contacts" data-contact-url="@contactUrl" data-contact-image-url="@imageUrl" 
+            <div id="contacts" data-contact-url="@contactUrl"  
                  data-bind="template: { name: 'contact-template', foreach: contacts, beforeRemove: deleteContactElement, afterAdd: showContactElement }">
             </div>
             <div id="add-contact">

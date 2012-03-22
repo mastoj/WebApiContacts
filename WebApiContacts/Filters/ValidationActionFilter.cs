@@ -14,6 +14,7 @@ namespace WebApiContacts.Filters
     {
         public override void OnActionExecuting(System.Web.Http.Controllers.HttpActionContext actionContext)
         {
+            HttpContext.Current.Response.TrySkipIisCustomErrors = true;
             if (!actionContext.ModelState.IsValid)
             {
                 var errors = actionContext.ModelState
@@ -27,7 +28,6 @@ namespace WebApiContacts.Filters
                 {
                     Log.Notification(error.Message);
                 }
-                HttpContext.Current.Response.TrySkipIisCustomErrors = true;
                 actionContext.Response = new HttpResponseMessage<Error[]>(errors, HttpStatusCode.BadRequest);
             }
         }
