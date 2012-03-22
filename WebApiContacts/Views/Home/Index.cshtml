@@ -1,5 +1,6 @@
 @{
     var contactUrl = Url.RouteUrl("DefaultApi", new { httproute = "", controller = "Contacts" });
+    var imageUrl = Url.RouteUrl("DefaultApi", new { httproute = "", controller = "Image" });
     var loginUrl = Url.RouteUrl("DefaultApi", new { httproute = "", controller = "Session" });
 }
 <!DOCTYPE html>
@@ -40,10 +41,10 @@
                 </div>
                 <div class="contact-image">
                     <div data-bind="if: HasImage">
-                        <img data-bind="attr: {src: Image}"/>
+                        <img data-bind="attr: {src: ImageGet}"/>
                     </div>
                     <div data-bind="ifnot: HasImage">
-                        <form enctype="multipart/form-data" method="POST" data-bind="attr: {action: Image}">
+                        <form enctype="multipart/form-data" method="POST" data-bind="attr: {action: ImagePost}">
                             <input type="file" name="file"/>
                             <input type="submit" value="Upload image"/>
                         </form>
@@ -71,7 +72,7 @@
         </section>
         <section class="content-wrapper main-content clear-fix">
             <h3>Contacts:</h3>
-            <div id="contacts" data-contact-url="@contactUrl" 
+            <div id="contacts" data-contact-url="@contactUrl" data-contact-image-url="@imageUrl" 
                  data-bind="template: { name: 'contact-template', foreach: contacts, beforeRemove: deleteContactElement, afterAdd: showContactElement }">
             </div>
             <div id="add-contact">
